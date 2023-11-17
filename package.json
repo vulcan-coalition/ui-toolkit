@@ -1,0 +1,27 @@
+{
+    "name": "ui-toolkit",
+    "version": "1.0.0",
+    "description": "Vulcan html5 ui-toolkit",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "build": "node build.js"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/vulcan-coalition/ui-toolkit.git"
+    },
+    "author": "Chatavut Viriyasuthee",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/vulcan-coalition/ui-toolkit/issues"
+    },
+    "homepage": "https://github.com/vulcan-coalition/ui-toolkit#readme",
+    "devDependencies": {
+        "glob": "^10.3.10",
+        "terser": "^5.24.0"
+    },
+    "dependencies": {
+        "node": "^21.1.0"
+    }
+}

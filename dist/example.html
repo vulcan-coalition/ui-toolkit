@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="description" content="Collab 2" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>Collab 2</title>
+        <!-- icon link -->
+        <link rel="icon" href="/app_test/assets/favicon.ico" />
+        <!-- stylesheets -->
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+        <link rel="stylesheet" href="./example.css" />
+    </head>
+    <body class="stack full secondary">
+        <div class="banner primary">
+            <h1>Vulcan UI Toolkits</h1>
+        </div>
+        <div class="container stack full">
+            <div class="card stack full elevated example-table">
+                <h2>Page Table</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Column 1</th>
+                            <th>Column 2</th>
+                            <th>Column 3</th>
+                            <th>Column 4</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan="4">Summary</td>
+                        </tr>
+                    </tfoot>
+                </table>
+                <div class="page-control"></div>
+            </div>
+            <div class="card stack full elevated example-suggest-list">
+                <h2>Suggest list</h2>
+                <input type="text" class="search-input" />
+                <input type="checkbox" class="all-tick" />
+                <div class="select-list"></div>
+                <div class="suggest-list"></div>
+            </div>
+        </div>
+        <div class="footer primary">
+            <span> &copy; 2023 Vulcan Coalition Co., Ltd. All Rights Reserved. </span>
+        </div>
+        <script src="./vc_uitoolkits.min.js"></script>
+        <script>
+            window.addEventListener("load", function () {
+                for (const container_dom of document.querySelectorAll(".example-table")) {
+                    const table = new Page_Table(
+                        container_dom.querySelector("table"),
+                        container_dom.querySelector(".page-control"),
+                        async function (p, l, s) {
+                            console.log(p, l, s);
+                            const rows = [];
+                            for (let i = 0; i < l; i++) {
+                                const row = [];
+                                for (let j = 0; j < 4; j++) {
+                                    if (s != null && s.order === "asc") row.push(`Row ${p * l + i + 1} Cell ${j + 1}`);
+                                    else row.push(`Row ${p * l + l - i} Cell ${j + 1}`);
+                                }
+                                rows.push(row);
+                            }
+                            return rows;
+                        },
+                        (limit = 10)
+                    );
+                }
+
+                const build_tag = function (name, icon = "close") {
+                    const elem = document.createElement("div");
+                    elem.classList.add("framed", "round", "clickable");
+                    const icon_button = document.createElement("span");
+                    icon_button.classList.add("material-symbols-rounded");
+                    icon_button.innerText = icon;
+                    const tag = document.createElement("span");
+                    tag.classList.add("widget-tag");
+                    tag.innerHTML = name;
+                    elem.appendChild(tag);
+                    elem.appendChild(icon_button);
+                    return elem;
+                };
+
+                for (const container_dom of document.querySelectorAll(".example-suggest-list")) {
+                    const suggest_list = new Suggest_list(container_dom.querySelector(".search-input"), container_dom.querySelector(".select-list"), container_dom.querySelector(".suggest-list"), container_dom.querySelector(".all-tick"), build_tag, build_tag);
+                    suggest_list.add_items(["1", "2", "3"]);
+                }
+            });
+        </script>
+    </body>
+</html>
