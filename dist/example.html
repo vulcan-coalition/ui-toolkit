@@ -36,12 +36,14 @@
                 </table>
                 <div class="page-control"></div>
             </div>
-            <div class="card stack full elevated example-suggest-list">
+            <div class="card stack gap-1 full elevated example-suggest-list">
                 <h2>Suggest list</h2>
-                <input type="text" class="search-input" />
-                <input type="checkbox" class="all-tick" />
-                <div class="select-list"></div>
-                <div class="suggest-list"></div>
+                <div class="deck gap-1">
+                    <input type="text" class="search-input" />
+                    <input type="checkbox" class="all-tick" />
+                </div>
+                <div class="select-list bag gap-1"></div>
+                <div class="suggest-list bag gap-1"></div>
             </div>
         </div>
         <div class="footer primary">
@@ -71,14 +73,12 @@
                     );
                 }
 
-                const build_tag = function (name, icon = "close") {
+                const build_tag = function (icon, name) {
                     const elem = document.createElement("div");
-                    elem.classList.add("framed", "round", "clickable");
                     const icon_button = document.createElement("span");
                     icon_button.classList.add("material-symbols-rounded");
                     icon_button.innerText = icon;
                     const tag = document.createElement("span");
-                    tag.classList.add("widget-tag");
                     tag.innerHTML = name;
                     elem.appendChild(tag);
                     elem.appendChild(icon_button);
@@ -86,8 +86,8 @@
                 };
 
                 for (const container_dom of document.querySelectorAll(".example-suggest-list")) {
-                    const suggest_list = new Suggest_list(container_dom.querySelector(".search-input"), container_dom.querySelector(".select-list"), container_dom.querySelector(".suggest-list"), container_dom.querySelector(".all-tick"), build_tag, build_tag);
-                    suggest_list.add_items(["1", "2", "3"]);
+                    const suggest_list = new Suggest_list(container_dom.querySelector(".search-input"), container_dom.querySelector(".select-list"), container_dom.querySelector(".suggest-list"), container_dom.querySelector(".all-tick"), build_tag.bind(null, "radio_button_checked"), build_tag.bind(null, "close"));
+                    suggest_list.add_items(["Apple", "Banana", "Cherry", "Durian", "Elderberry", "Fig", "Grape", "Honeydew", "Jackfruit", "Kiwi", "Lemon", "Mango", "Nectarine", "Orange", "Papaya", "Quince", "Raspberry", "Strawberry", "Tangerine", "Ugli", "Watermelon"]);
                 }
             });
         </script>

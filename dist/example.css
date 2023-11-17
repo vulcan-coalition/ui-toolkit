@@ -41,7 +41,7 @@ body {
     background-color: transparent;
 }
 
-.frame {
+.framed {
     border: solid 1px var(--accent);
 }
 
@@ -133,8 +133,9 @@ input[type="date"] {
 
 input[type="checkbox"] {
     cursor: pointer;
-    width: 0.5rem;
-    height: 0.5rem;
+    border-radius: 999px;
+    width: 2rem;
+    height: 2rem;
 }
 
 .button,
@@ -213,6 +214,13 @@ input[type="button"]:active {
     display: flex;
     flex-flow: row nowrap;
     justify-content: center;
+    align-items: center;
+}
+
+.bag {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: flex-start;
     align-items: center;
 }
 
@@ -345,4 +353,34 @@ table tfoot td {
     justify-content: flex-start;
     align-items: center;
     gap: 0.5rem;
+}
+
+/* === Suggest list === */
+
+.select-list > * {
+    border: solid 1px #44005f;
+    border-radius: 999px;
+    padding: 0.2rem 0.5rem;
+
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 0.5rem;
+
+    cursor: pointer;
+}
+
+.suggest-list > * {
+    border: solid 1px #44005f;
+    border-radius: 999px;
+    padding: 0.2rem 0.5rem;
+
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 0.5rem;
+
+    cursor: pointer;
 }
