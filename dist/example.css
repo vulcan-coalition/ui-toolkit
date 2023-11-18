@@ -390,3 +390,68 @@ table tfoot td {
     cursor: pointer;
     user-select: none;
 }
+
+/* === Recorder === */
+
+.recorder {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.recorder .record-button {
+    position: relative;
+    width: 5rem;
+    height: 5rem;
+    overflow: hidden;
+
+    cursor: pointer;
+    user-select: none;
+
+    border-radius: 0.5rem;
+    background-color: #44005f;
+}
+
+.record-button .visualizer {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+}
+
+.record-button .bevel {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+}
+
+.bevel .material-symbols-rounded {
+    font-size: 5rem;
+    color: #fff;
+}
+
+.record-button.toggled .record {
+    display: none;
+}
+
+.recorder .block {
+    position: absolute;
+    opacity: 0;
+    background-color: var(--accent);
+    border-radius: 0.1rem;
+}
+
+.recorder .record-bar {
+    height: 2.5rem;
+
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 0.5rem;
+}

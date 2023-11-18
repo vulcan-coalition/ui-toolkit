@@ -46,13 +46,17 @@
                 <div class="select-list bag gap-1"></div>
                 <div class="suggest-list bag gap-1"></div>
             </div>
+            <div class="card stack gap-1 full elevated example-audio-recorder">
+                <h2>Audio recorder</h2>
+                <div class="recorder"></div>
+            </div>
         </div>
         <div class="footer primary">
             <span> &copy; 2023 Vulcan Coalition Co., Ltd. All Rights Reserved. </span>
         </div>
         <script src="./vc_uitoolkits.min.js"></script>
         <script>
-            window.addEventListener("load", function () {
+            window.addEventListener("load", async function () {
                 for (const container_dom of document.querySelectorAll(".example-table")) {
                     const table = new Page_Table(
                         container_dom.querySelector("table"),
@@ -97,6 +101,12 @@
                     container_dom.querySelector(".clear-all").addEventListener("click", function () {
                         suggest_list.clear_selected();
                     });
+                }
+
+                await vulcan_recorder.init();
+
+                for (const container_dom of document.querySelectorAll(".example-audio-recorder")) {
+                    const recorder = vulcan_recorder.build_control(container_dom.querySelector(".recorder"));
                 }
             });
         </script>
