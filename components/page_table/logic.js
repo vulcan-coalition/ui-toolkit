@@ -137,7 +137,13 @@ class Page_Table {
             const tr = document.createElement("tr");
             for (const cell of row) {
                 const td = document.createElement("td");
-                td.innerHTML = cell;
+                if (typeof cell === "object") {
+                    td.appendChild(cell);
+                } else if (typeof cell === "string" && cell.startsWith("<")) {
+                    td.innerHTML = cell;
+                } else {
+                    td.appendChild(document.createTextNode(cell));
+                }
                 tr.appendChild(td);
             }
             this.tbody.appendChild(tr);
