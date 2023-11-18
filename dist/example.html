@@ -39,8 +39,9 @@
             <div class="card stack gap-1 full elevated example-suggest-list">
                 <h2>Suggest list</h2>
                 <div class="deck gap-1">
-                    <input type="text" class="search-input" />
-                    <input type="checkbox" class="all-tick" />
+                    <input type="search" class="search-input" />
+                    <span class="select-all button material-symbols-rounded">all_inclusive</span>
+                    <span class="clear-all button material-symbols-rounded">delete</span>
                 </div>
                 <div class="select-list bag gap-1"></div>
                 <div class="suggest-list bag gap-1"></div>
@@ -86,8 +87,16 @@
                 };
 
                 for (const container_dom of document.querySelectorAll(".example-suggest-list")) {
-                    const suggest_list = new Suggest_list(container_dom.querySelector(".search-input"), container_dom.querySelector(".select-list"), container_dom.querySelector(".suggest-list"), container_dom.querySelector(".all-tick"), build_tag.bind(null, "radio_button_checked"), build_tag.bind(null, "close"));
+                    const suggest_list = new Suggest_list(container_dom.querySelector(".search-input"), container_dom.querySelector(".select-list"), container_dom.querySelector(".suggest-list"), build_tag.bind(null, "radio_button_checked"), build_tag.bind(null, "close"));
                     suggest_list.add_items(["Apple", "Banana", "Cherry", "Durian", "Elderberry", "Fig", "Grape", "Honeydew", "Jackfruit", "Kiwi", "Lemon", "Mango", "Nectarine", "Orange", "Papaya", "Quince", "Raspberry", "Strawberry", "Tangerine", "Ugli", "Watermelon"]);
+
+                    container_dom.querySelector(".select-all").addEventListener("click", function () {
+                        suggest_list.select_all();
+                    });
+
+                    container_dom.querySelector(".clear-all").addEventListener("click", function () {
+                        suggest_list.clear_selected();
+                    });
                 }
             });
         </script>

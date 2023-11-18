@@ -141,6 +141,7 @@ input[type="checkbox"] {
 .button,
 input[type="button"] {
     cursor: pointer;
+    user-select: none;
     box-shadow: 1px 1px 2px #111f;
 }
 
@@ -281,6 +282,13 @@ body {
     border-radius: 2rem;
 }
 
+/* === All === */
+
+.button {
+    background-color: #44005f;
+    color: #fff;
+}
+
 /* === Table === */
 
 table {
@@ -316,6 +324,7 @@ table thead th {
     background-color: #44005f;
     color: #fff;
     cursor: pointer;
+    user-select: none;
 }
 
 table tbody tr:nth-child(odd) {
@@ -341,11 +350,6 @@ table tfoot td {
     gap: 0.5rem;
 }
 
-.page-control .button {
-    background-color: #44005f;
-    color: #fff;
-}
-
 .example-table thead th > * {
     min-height: 2rem;
     display: flex;
@@ -369,6 +373,7 @@ table tfoot td {
     gap: 0.5rem;
 
     cursor: pointer;
+    user-select: none;
 }
 
 .suggest-list > * {
@@ -383,4 +388,5 @@ table tfoot td {
     gap: 0.5rem;
 
     cursor: pointer;
+    user-select: none;
 }

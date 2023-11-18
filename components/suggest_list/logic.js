@@ -1,9 +1,8 @@
 class Suggest_list {
-    constructor(search_input_dom, tag_list_dom, tag_suggest_dom, all_tick_dom, build_suggest_dom, build_tag_dom) {
+    constructor(search_input_dom, tag_list_dom, tag_suggest_dom, build_suggest_dom, build_tag_dom) {
         this.search_input = search_input_dom;
         this.tag_list_dom = tag_list_dom;
         this.tag_suggest_dom = tag_suggest_dom;
-        this.all_tick = all_tick_dom;
 
         this.data = [];
         this.selected_data = [];
@@ -95,8 +94,6 @@ class Suggest_list {
             return;
         }
         this.selected_data.push(tag);
-        // uncheck all tick
-        if (this.all_tick != null) this.all_tick.checked = false;
 
         const tag_node = this.build_tag_dom(tag);
         let close_button = tag_node.querySelector(".close");
@@ -114,6 +111,15 @@ class Suggest_list {
             }.bind(this)
         );
         this.tag_list_dom.appendChild(tag_node);
+    }
+
+    select_all() {
+        this.clear_selected();
+        this.data.forEach(
+            function (item) {
+                this.set_selected(item.tag);
+            }.bind(this)
+        );
     }
 
     clear_selected() {
