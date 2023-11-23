@@ -15,7 +15,7 @@
         </div>
         <div class="container stack full">
             <div class="card stack full elevated example-table">
-                <h2>Page Table</h2>
+                <h2>Paged Table</h2>
                 <table>
                     <thead>
                         <tr>
@@ -32,6 +32,11 @@
                         </tr>
                     </tfoot>
                 </table>
+                <div class="page-control"></div>
+            </div>
+            <div class="card stack full elevated example-list">
+                <h2>Paged List</h2>
+                <div class="list"></div>
                 <div class="page-control"></div>
             </div>
             <div class="card stack gap-1 full elevated example-suggest-list">
@@ -56,7 +61,7 @@
         <script>
             window.addEventListener("load", async function () {
                 for (const container_dom of document.querySelectorAll(".example-table")) {
-                    const table = new Page_Table(
+                    const table = new Paged_Table(
                         container_dom.querySelector("table"),
                         container_dom.querySelector(".page-control"),
                         async function (p, l, s) {
@@ -71,6 +76,28 @@
                                 rows.push(row);
                             }
                             return rows;
+                        },
+                        (limit = 10)
+                    );
+                }
+
+                for (const container_dom of document.querySelectorAll(".example-list")) {
+                    const list = new Paged_List(
+                        container_dom.querySelector(".list"),
+                        container_dom.querySelector(".page-control"),
+                        async function (p, l, s) {
+                            console.log(p, l, s);
+                            const items = [];
+                            const icon_list = ["hearing", "article", "visibility", "mic"];
+                            for (let i = 0; i < l; i++) {
+                                const item_div = document.createElement("div");
+                                item_div.classList.add("item");
+                                // random choose icon
+                                const icon = icon_list[Math.floor(Math.random() * icon_list.length)];
+                                item_div.innerHTML = `<span class="icon material-symbols-rounded">${icon}</span><div class="info"><h3>${p * l + i + 1}</h3><div class="detail">lorem ipsum</div></div>`;
+                                items.push(item_div);
+                            }
+                            return items;
                         },
                         (limit = 10)
                     );

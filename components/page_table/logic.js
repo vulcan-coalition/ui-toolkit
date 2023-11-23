@@ -1,13 +1,8 @@
-class Page_Table {
-    constructor(table_dom, page_dom, request_data, limit = 10, filename = null) {
-        this.table_dom = table_dom;
-        this.tbody = table_dom.querySelector("tbody");
+class Paged_Collection {
+    constructor(page_dom, limit = 10) {
         this.page_dom = page_dom;
-        this.request_data = request_data;
-
         this.page = 1;
         this.limit = limit;
-        this.sort_by = null;
 
         // page_dom add buttons and page display
         const prev_button = document.createElement("span");
@@ -26,6 +21,45 @@ class Page_Table {
         next_button.innerHTML = "navigate_next";
         next_button.onclick = () => this.next_page();
         this.page_dom.appendChild(next_button);
+    }
+
+    set_limit(limit) {
+        this.limit = limit;
+        this.update();
+        return this;
+    }
+
+    set_page(page) {
+        this.page = page;
+        const count = this.update();
+        if (count === 0) {
+            this.page--;
+            this.update();
+        }
+        this.page_pointer_node.innerHTML = this.page;
+        return this;
+    }
+
+    prev_page() {
+        if (this.page > 1) {
+            this.set_page(this.page - 1);
+        }
+    }
+
+    next_page() {
+        this.set_page(this.page + 1);
+    }
+}
+
+class Paged_Table extends Paged_Collection {
+    constructor(table_dom, page_dom, request_data, limit = 10, filename = null) {
+        super(page_dom);
+
+        this.table_dom = table_dom;
+        this.tbody = table_dom.querySelector("tbody");
+
+        this.request_data = request_data;
+        this.sort_by = null;
 
         const download_button = document.createElement("span");
         download_button.classList.add("button", "material-symbols-rounded");
@@ -74,33 +108,6 @@ class Page_Table {
         }
 
         this.update();
-    }
-
-    set_limit(limit) {
-        this.limit = limit;
-        this.update();
-        return this;
-    }
-
-    set_page(page) {
-        this.page = page;
-        const count = this.update();
-        if (count === 0) {
-            this.page--;
-            this.update();
-        }
-        this.page_pointer_node.innerHTML = this.page;
-        return this;
-    }
-
-    prev_page() {
-        if (this.page > 1) {
-            this.set_page(this.page - 1);
-        }
-    }
-
-    next_page() {
-        this.set_page(this.page + 1);
     }
 
     sort_by_column(column, order = "asc") {
@@ -171,5 +178,32 @@ class Page_Table {
 
         filename = filename ? filename : "excel_data.xlsx";
         XLSX.writeFileXLSX(workbook, filename);
+    }
+}
+
+// synonym
+class Page_Table extends Paged_Table {
+    constructor(table_dom, page_dom, request_data, limit = 10, filename = null) {
+        super(table_dom, page_dom, request_data, limit, filename);
+    }
+}
+
+class Paged_List extends Paged_Collection {
+    constructor(list_dom, page_dom, request_data, limit = 10) {
+        super(page_dom);
+
+        this.list_dom = list_dom;
+        this.request_data = request_data;
+
+        this.update();
+    }
+
+    async update() {
+        const data = await this.request_data(this.page, this.limit, this.sort_by);
+        this.list_dom.innerHTML = "";
+        for (const item_dom of data) {
+            this.list_dom.appendChild(item_dom);
+        }
+        return data.length;
     }
 }
