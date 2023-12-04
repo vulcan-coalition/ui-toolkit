@@ -23,10 +23,10 @@ body.light {
 
 body {
     --accent: #fff;
-    --accent-background: #21004d;
+    --accent-background: #11001a;
 
     --neutral: #fff;
-    --neutral-background: #11001a;
+    --neutral-background: #21004d;
 }
 
 .primary {
@@ -60,6 +60,11 @@ body {
 
 .elevated {
     box-shadow: 2px 2px 5px #111f;
+}
+
+.highlight {
+    color: var(--neutral);
+    background-color: var(--neutral-background);
 }
 
 ::-webkit-scrollbar {
@@ -298,8 +303,8 @@ body {
 /* === All === */
 
 .button {
-    background-color: #44005f;
-    color: #fff;
+    background-color: var(--accent-background);
+    color: var(--accent);
 }
 
 /* === Menu === */
@@ -466,6 +471,7 @@ table tfoot td {
     justify-content: flex-start;
     align-items: center;
     gap: 1rem;
+    padding: 1rem 0rem;
 }
 
 .list > .item {
@@ -496,7 +502,6 @@ table tfoot td {
     border-top-right-radius: 2rem;
     border-bottom-right-radius: 2rem;
     padding: 0.5rem 0.5rem;
-    border: solid 1px #44005f;
 
     background-color: var(--neutral-background);
     color: var(--neutral);
@@ -538,7 +543,7 @@ table tfoot td {
 /* === Suggest list === */
 
 .select-list > * {
-    border: solid 1px #44005f;
+    border: solid 1px var(--accent);
     border-radius: 999px;
     padding: 0.2rem 0.5rem;
 
@@ -553,7 +558,7 @@ table tfoot td {
 }
 
 .suggest-list > * {
-    border: solid 1px #44005f;
+    border: solid 1px var(--accent);
     border-radius: 999px;
     padding: 0.2rem 0.5rem;
 
@@ -587,7 +592,7 @@ table tfoot td {
     user-select: none;
 
     border-radius: 0.5rem;
-    background-color: #44005f;
+    background-color: var(--accent-background);
 }
 
 .record-button .visualizer {
