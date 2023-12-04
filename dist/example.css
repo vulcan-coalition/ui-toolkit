@@ -11,19 +11,32 @@ body {
     font-family: "Sarabun", sans-serif;
     line-height: 1rem;
     font-size: 1rem;
+}
 
-    --accent: #8c00ff;
-    --accent-background: #fff;
+body.light {
+    --accent: #fff;
+    --accent-background: #44005f;
+
+    --neutral: #333;
+    --neutral-background: #fff;
+}
+
+body {
+    --accent: #fff;
+    --accent-background: #21004d;
+
+    --neutral: #fff;
+    --neutral-background: #11001a;
 }
 
 .primary {
-    color: #fff;
-    background-color: #44005f;
+    color: var(--accent);
+    background-color: var(--accent-background);
 }
 
 .secondary {
-    color: #333;
-    background-color: #fff;
+    color: var(--neutral);
+    background-color: var(--neutral-background);
 }
 
 .tertiary {
@@ -87,8 +100,8 @@ a {
     outline-color: var(--accent);
 }
 ::selection {
-    background-color: var(--accent);
-    color: #fff;
+    color: var(--accent);
+    background-color: var(--accent-background);
 }
 /* end accent color */
 
@@ -96,11 +109,11 @@ a {
 input,
 select,
 .combo {
-    color: inherit;
-    background-color: inherit;
+    color: var(--accent);
+    background-color: var(--accent-background);
     height: 2rem;
     border: none;
-    border-bottom: solid 1px var(--accent);
+    border-bottom: solid 1px var(--neutral);
     border-radius: 999px;
     font-weight: 600;
     font-size: 1rem;
@@ -321,8 +334,8 @@ body {
 
     overflow: hidden;
 
-    color: #fff;
-    background-color: #44005f;
+    color: var(--accent);
+    background-color: var(--accent-background);
 
     padding: 1rem 2rem;
     max-height: 4rem;
@@ -335,7 +348,7 @@ body {
 }
 
 .sub-menu + .sub-menu:not(.hide) {
-    border-top: solid 1px #fff;
+    border-top: solid 1px var(--accent);
 }
 
 .sub-menu > * {
@@ -426,23 +439,23 @@ table tfoot td:last-child {
 /* color to table */
 
 table thead th {
-    background-color: #44005f;
-    color: #fff;
+    background-color: var(--accent-background);
+    color: var(--accent);
     cursor: pointer;
     user-select: none;
 }
 
 table tbody tr:nth-child(odd) {
-    background-color: #fff;
+    background-color: #fff2;
 }
 
 table tbody tr:nth-child(even) {
-    background-color: #f2f2f2;
+    background-color: #0002;
 }
 
 table tfoot td {
-    background-color: #44005f;
-    color: #fff;
+    background-color: var(--accent-background);
+    color: var(--accent);
 }
 
 /* List */
@@ -472,9 +485,9 @@ table tfoot td {
     border-top-left-radius: 2rem;
     border-bottom-left-radius: 2rem;
     padding: 0.5rem 0.5rem;
-    background-color: #44005f;
     font-size: 4rem;
-    color: #fff;
+    background-color: var(--accent-background);
+    color: var(--accent);
     width: 5rem;
     height: 5rem;
 }
@@ -485,7 +498,8 @@ table tfoot td {
     padding: 0.5rem 0.5rem;
     border: solid 1px #44005f;
 
-    background-color: #fff;
+    background-color: var(--neutral-background);
+    color: var(--neutral);
 
     display: flex;
     flex-flow: column nowrap;
