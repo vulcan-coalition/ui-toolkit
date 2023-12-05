@@ -146,9 +146,16 @@ class Menu {
                             }
                         });
 
+                        let collapsed_timeout = null;
+                        sub_menu.addEventListener("mouseover", function () {
+                            if (collapsed_timeout != null) clearTimeout(collapsed_timeout);
+                        });
                         sub_menu.addEventListener("mouseleave", function () {
-                            sub_menu.classList.add("hide");
-                            arrow.innerHTML = "arrow_drop_down";
+                            if (collapsed_timeout != null) clearTimeout(collapsed_timeout);
+                            collapsed_timeout = setTimeout(function () {
+                                sub_menu.classList.add("hide");
+                                arrow.innerHTML = "arrow_drop_down";
+                            }, 500);
                         });
                     }
                     break;
