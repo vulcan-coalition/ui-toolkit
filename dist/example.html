@@ -9,7 +9,7 @@
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
         <link rel="stylesheet" href="./example.css" />
     </head>
-    <body class="stack full secondary">
+    <body class="light stack full secondary">
         <div class="banner primary">
             <h1>Vulcan UI Toolkits</h1>
         </div>
@@ -64,6 +64,8 @@
         <script src="./vc_uitoolkits.min.js"></script>
         <script>
             const build_menu = function () {
+                Menu_Item.material_symbols_class = "material-symbols-rounded";
+
                 const toggle_theme_button = document.createElement("div");
                 toggle_theme_button.id = "toggle-theme";
                 const light_icon = document.createElement("span");
@@ -107,13 +109,8 @@
 
                 const menu_container = document.querySelector("#menu");
 
-                const menu = document.createElement("div");
-                menu.classList.add("sub-menu");
-                menu_container.appendChild(menu);
-
-                const menu_obj = new Menu(menu);
-                menu_obj.add_items(menu_items);
-                menu_obj.render({
+                const menu_obj = new Menu(menu_items);
+                menu_obj.render(menu_container, {
                     mouseover: function (item_dom, item) {
                         item_dom.classList.add("highlight");
                     },
