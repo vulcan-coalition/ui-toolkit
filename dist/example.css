@@ -17,7 +17,7 @@ body.light {
     --accent: #fff;
     --accent-background: #44005f;
 
-    --neutral: #333;
+    --neutral: #21004d;
     --neutral-background: #fff;
 }
 
@@ -32,6 +32,7 @@ body {
 .primary {
     color: var(--accent);
     background-color: var(--accent-background);
+    background: linear-gradient(162deg, rgba(68, 0, 95, 1) 0%, rgba(26, 0, 37, 1) 100%);
 }
 
 .secondary {
