@@ -72,8 +72,10 @@ class Menu_Item_Sub extends Menu_Item {
     }
 
     collapse() {
-        this.sub_menu_obj.dom.classList.add("hide");
-        this.arrow.innerHTML = "segment";
+        if (this.sub_menu_obj.dom != null) {
+            this.sub_menu_obj.dom.classList.add("hide");
+            this.arrow.innerHTML = "segment";
+        }
         this.sub_menu_obj.collapse_all();
     }
 
