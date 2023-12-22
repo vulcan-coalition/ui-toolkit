@@ -7,8 +7,6 @@ class Menu_Item {
         this.class_name = class_name;
     }
 
-    static material_symbols_class = "material-symbols-outlined";
-
     assign_parent_menu(parent_menu) {
         this.parent_menu = parent_menu;
     }
@@ -16,7 +14,7 @@ class Menu_Item {
     render(menu) {
         this.dom = document.createElement("div");
         const icon_dom = document.createElement("span");
-        icon_dom.classList.add(Menu_Item.material_symbols_class);
+        icon_dom.classList.add(ui_toolkit_symbols_class);
         icon_dom.setAttribute("aria-hidden", "true");
         icon_dom.innerHTML = this.icon;
         const text_dom = document.createElement("span");

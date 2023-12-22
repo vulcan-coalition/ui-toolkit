@@ -7,14 +7,14 @@ class Paged_Collection {
         this.request_data = request_data;
 
         const first_button = document.createElement("span");
-        first_button.classList.add("button", "material-symbols-rounded");
+        first_button.classList.add("button", ui_toolkit_symbols_class);
         first_button.innerHTML = "first_page";
         first_button.onclick = () => this.set_page(1);
         this.page_dom.appendChild(first_button);
 
         // page_dom add buttons and page display
         const prev_button = document.createElement("span");
-        prev_button.classList.add("button", "material-symbols-rounded");
+        prev_button.classList.add("button", ui_toolkit_symbols_class);
         prev_button.innerHTML = "navigate_before";
         prev_button.onclick = () => this.prev_page();
         this.page_dom.appendChild(prev_button);
@@ -25,13 +25,13 @@ class Paged_Collection {
         this.page_dom.appendChild(this.page_pointer_node);
 
         const next_button = document.createElement("span");
-        next_button.classList.add("button", "material-symbols-rounded");
+        next_button.classList.add("button", ui_toolkit_symbols_class);
         next_button.innerHTML = "navigate_next";
         next_button.onclick = () => this.next_page();
         this.page_dom.appendChild(next_button);
 
         const last_button = document.createElement("span");
-        last_button.classList.add("button", "material-symbols-rounded");
+        last_button.classList.add("button", ui_toolkit_symbols_class);
         last_button.innerHTML = "last_page";
         last_button.onclick = () => this.set_page(-1);
         this.page_dom.appendChild(last_button);
@@ -125,7 +125,7 @@ class Paged_Table extends Paged_Collection {
 
         if (filename != null) {
             const download_button = document.createElement("span");
-            download_button.classList.add("button", "material-symbols-rounded");
+            download_button.classList.add("button", ui_toolkit_symbols_class);
             download_button.innerHTML = "download";
             download_button.onclick = () => this.export_xlsx(filename);
             this.page_dom.appendChild(download_button);
@@ -142,12 +142,12 @@ class Paged_Table extends Paged_Collection {
             const text_node = document.createTextNode(column_name);
             div.appendChild(text_node);
             const arrow_up = document.createElement("span");
-            arrow_up.classList.add("material-symbols-rounded");
+            arrow_up.classList.add(ui_toolkit_symbols_class);
             arrow_up.innerHTML = "arrow_drop_up";
             arrow_up.style.display = "none";
             div.appendChild(arrow_up);
             const arrow_down = document.createElement("span");
-            arrow_down.classList.add("material-symbols-rounded");
+            arrow_down.classList.add(ui_toolkit_symbols_class);
             arrow_down.innerHTML = "arrow_drop_down";
             arrow_down.style.display = "none";
             div.appendChild(arrow_down);

@@ -132,7 +132,7 @@ vulcan_recorder = (function () {
 
         const bevel_dom = document.createElement("div");
         bevel_dom.classList.add("bevel");
-        bevel_dom.innerHTML = '<div class="material-symbols-rounded record" role="button">mic</div><div class="material-symbols-rounded stop" role="button">pause</div>';
+        bevel_dom.innerHTML = `<div class="${ui_toolkit_symbols_class} record" role="button">mic</div><div class="${ui_toolkit_symbols_class} stop" role="button">pause</div>`;
 
         recorder_button.appendChild(visualizer_dom);
         recorder_button.appendChild(bevel_dom);
@@ -146,14 +146,14 @@ vulcan_recorder = (function () {
         record_time.innerHTML = "00:00 / " + format_seconds(max_record_time);
 
         const reset_button = document.createElement("span");
-        reset_button.classList.add("button", "material-symbols-rounded");
+        reset_button.classList.add("button", ui_toolkit_symbols_class);
         reset_button.role = "button";
         reset_button.setAttribute("aria-label", "Clear");
         reset_button.innerHTML = "delete";
         record_bar.appendChild(reset_button);
 
         const playback_button = document.createElement("span");
-        playback_button.classList.add("button", "material-symbols-rounded");
+        playback_button.classList.add("button", ui_toolkit_symbols_class);
         playback_button.role = "button";
         playback_button.setAttribute("aria-label", "Play");
         playback_button.innerHTML = "play_arrow";
