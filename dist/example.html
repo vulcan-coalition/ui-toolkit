@@ -64,8 +64,6 @@
         <script src="./vc_uitoolkits.min.js"></script>
         <script>
             const build_menu = function () {
-                Menu_Item.material_symbols_class = "material-symbols-rounded";
-
                 const toggle_theme_button = document.createElement("div");
                 toggle_theme_button.id = "toggle-theme";
                 const light_icon = document.createElement("span");
@@ -121,6 +119,8 @@
             };
 
             window.addEventListener("load", async function () {
+                ui_toolkit_symbols_class = "material-symbols-rounded";
+
                 build_menu();
 
                 const max_items = 128;

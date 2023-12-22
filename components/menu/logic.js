@@ -42,7 +42,7 @@ class Menu_Item_Link extends Menu_Item {
             this.dom.target = "_blank";
         }
         const icon_dom = document.createElement("span");
-        icon_dom.classList.add(Menu_Item.material_symbols_class);
+        icon_dom.classList.add(ui_toolkit_symbols_class);
         icon_dom.setAttribute("aria-hidden", "true");
         icon_dom.innerHTML = this.icon;
         const text_dom = document.createElement("span");
@@ -86,7 +86,7 @@ class Menu_Item_Sub extends Menu_Item {
 
         const icon_dom = document.createElement("span");
         icon_dom.setAttribute("aria-hidden", "true");
-        icon_dom.classList.add(Menu_Item.material_symbols_class);
+        icon_dom.classList.add(ui_toolkit_symbols_class);
         icon_dom.innerHTML = this.icon;
         const text_dom = document.createElement("span");
         text_dom.role = "heading";
@@ -95,7 +95,7 @@ class Menu_Item_Sub extends Menu_Item {
         text_dom.innerHTML = this.text;
         const arrow = document.createElement("span");
         arrow.setAttribute("aria-hidden", "true");
-        arrow.classList.add(Menu_Item.material_symbols_class);
+        arrow.classList.add(ui_toolkit_symbols_class);
         arrow.innerHTML = "segment";
         this.arrow = arrow;
 
@@ -179,7 +179,7 @@ class Menu_Item_Button extends Menu_Item {
         this.dom = document.createElement("div");
         this.dom.role = "button";
         const icon_dom = document.createElement("span");
-        icon_dom.classList.add(Menu_Item.material_symbols_class);
+        icon_dom.classList.add(ui_toolkit_symbols_class);
         icon_dom.innerHTML = this.icon;
         const text_dom = document.createElement("span");
         text_dom.classList.add("text");
