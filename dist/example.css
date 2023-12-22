@@ -134,9 +134,12 @@ input[type="password"] {
 }
 
 .button,
-input,
-select {
+input {
     padding: 0.5rem 0.5rem;
+}
+
+select {
+    padding: 0rem 0.5rem;
 }
 
 select,

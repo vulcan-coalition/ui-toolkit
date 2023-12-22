@@ -1,8 +1,16 @@
 class Paged_Collection {
-    constructor(page_dom, limit = 10) {
+    constructor(page_dom, request_data, limit = 10) {
         this.page_dom = page_dom;
         this.page = 1;
         this.limit = limit;
+
+        this.request_data = request_data;
+
+        const first_button = document.createElement("span");
+        first_button.classList.add("button", "material-symbols-rounded");
+        first_button.innerHTML = "first_page";
+        first_button.onclick = () => this.set_page(1);
+        this.page_dom.appendChild(first_button);
 
         // page_dom add buttons and page display
         const prev_button = document.createElement("span");
@@ -21,6 +29,23 @@ class Paged_Collection {
         next_button.innerHTML = "navigate_next";
         next_button.onclick = () => this.next_page();
         this.page_dom.appendChild(next_button);
+
+        const last_button = document.createElement("span");
+        last_button.classList.add("button", "material-symbols-rounded");
+        last_button.innerHTML = "last_page";
+        last_button.onclick = () => this.set_page(-1);
+        this.page_dom.appendChild(last_button);
+
+        const limit_select = document.createElement("select");
+        for (const limit of [10, 20, 50, 100]) {
+            const option = document.createElement("option");
+            option.value = limit;
+            option.innerHTML = limit;
+            limit_select.appendChild(option);
+        }
+        limit_select.value = limit;
+        limit_select.onchange = () => this.set_limit(limit_select.value);
+        this.page_dom.appendChild(limit_select);
     }
 
     set_limit(limit) {
@@ -29,13 +54,51 @@ class Paged_Collection {
         return this;
     }
 
-    set_page(page) {
-        this.page = page;
-        const count = this.update();
-        if (count === 0) {
-            this.page--;
+    async set_page(page) {
+        if (page === -1) {
+            // search for the last page
+            // exponential steps
+            let step = 1;
+            page = 1;
+            let reach_end = false;
+            for (let i = 0; i < 32; i++) {
+                const data = await this.request_data(page, this.limit);
+                if (data.length < this.limit) {
+                    reach_end = true;
+                    break;
+                }
+                step *= 10;
+                page += step;
+            }
+
+            if (!reach_end) {
+                // too many pages, stop search
+                this.page = page;
+            } else {
+                // binary search
+                let left = page - step;
+                let right = page;
+                while (left < right) {
+                    const mid = Math.floor((left + right) / 2);
+                    const data = await this.request_data(mid, this.limit);
+                    if (data.length < this.limit) {
+                        right = mid;
+                    } else {
+                        left = mid + 1;
+                    }
+                }
+                this.page = left;
+            }
             this.update();
+        } else {
+            this.page = page;
+            const count = await this.update();
+            if (count === 0) {
+                // jump to last page
+                this.set_page(-1);
+            }
         }
+
         this.page_pointer_node.innerHTML = this.page;
         return this;
     }
@@ -53,19 +116,20 @@ class Paged_Collection {
 
 class Paged_Table extends Paged_Collection {
     constructor(table_dom, page_dom, request_data, limit = 10, filename = null) {
-        super(page_dom);
+        super(page_dom, request_data, limit);
 
         this.table_dom = table_dom;
         this.tbody = table_dom.querySelector("tbody");
 
-        this.request_data = request_data;
         this.sort_by = null;
 
-        const download_button = document.createElement("span");
-        download_button.classList.add("button", "material-symbols-rounded");
-        download_button.innerHTML = "download";
-        download_button.onclick = () => this.export_xlsx(filename);
-        this.page_dom.appendChild(download_button);
+        if (filename != null) {
+            const download_button = document.createElement("span");
+            download_button.classList.add("button", "material-symbols-rounded");
+            download_button.innerHTML = "download";
+            download_button.onclick = () => this.export_xlsx(filename);
+            this.page_dom.appendChild(download_button);
+        }
 
         // add sort event listener
         const thead = this.table_dom.querySelector("thead tr:last-child");
@@ -182,18 +246,13 @@ class Paged_Table extends Paged_Collection {
 }
 
 // synonym
-class Page_Table extends Paged_Table {
-    constructor(table_dom, page_dom, request_data, limit = 10, filename = null) {
-        super(table_dom, page_dom, request_data, limit, filename);
-    }
-}
+Page_Table = Paged_Table;
 
 class Paged_List extends Paged_Collection {
     constructor(list_dom, page_dom, request_data, limit = 10) {
-        super(page_dom);
+        super(page_dom, request_data, limit);
 
         this.list_dom = list_dom;
-        this.request_data = request_data;
 
         this.update();
     }

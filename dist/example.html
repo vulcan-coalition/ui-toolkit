@@ -123,6 +123,8 @@
             window.addEventListener("load", async function () {
                 build_menu();
 
+                const max_items = 128;
+
                 for (const container_dom of document.querySelectorAll(".example-table")) {
                     const table = new Paged_Table(
                         container_dom.querySelector("table"),
@@ -130,17 +132,20 @@
                         async function (p, l, s) {
                             console.log(p, l, s);
                             const rows = [];
-                            for (let i = 0; i < l; i++) {
+                            const start_index = (p - 1) * l;
+                            const end_index = Math.min(p * l, max_items);
+                            for (let i = start_index; i < end_index; i++) {
                                 const row = [];
                                 for (let j = 0; j < 4; j++) {
-                                    if (s != null && s.order === "asc") row.push(`Row ${p * l + i + 1} Cell ${j + 1}`);
-                                    else row.push(`Row ${p * l + l - i} Cell ${j + 1}`);
+                                    if (s != null && s.order === "desc") row.push(`Row ${max_items - (p - 1) * l - (i - start_index)} Cell ${j + 1}`);
+                                    else row.push(`Row ${i + 1} Cell ${j + 1}`);
                                 }
                                 rows.push(row);
                             }
                             return rows;
                         },
-                        (limit = 10)
+                        (limit = 10),
+                        (filename = "example_table.csv")
                     );
                 }
 
@@ -150,14 +155,16 @@
                         container_dom.querySelector(".page-control"),
                         async function (p, l, s) {
                             console.log(p, l, s);
+                            const start_index = (p - 1) * l;
+                            const end_index = Math.min(p * l, max_items);
                             const items = [];
                             const icon_list = ["hearing", "article", "visibility", "mic"];
-                            for (let i = 0; i < l; i++) {
+                            for (let i = start_index; i < end_index; i++) {
                                 const item_div = document.createElement("div");
                                 item_div.classList.add("item");
                                 // random choose icon
                                 const icon = icon_list[Math.floor(Math.random() * icon_list.length)];
-                                item_div.innerHTML = `<span class="icon material-symbols-rounded">${icon}</span><div class="info"><h3>${p * l + i + 1}</h3><div class="detail">lorem ipsum</div></div>`;
+                                item_div.innerHTML = `<span class="icon material-symbols-rounded">${icon}</span><div class="info"><h3>${i + 1}</h3><div class="detail">lorem ipsum</div></div>`;
                                 items.push(item_div);
                             }
                             return items;
