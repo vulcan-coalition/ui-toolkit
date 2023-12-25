@@ -58,7 +58,7 @@ class Paged_Collection {
         if (page === -1) {
             // search for the last page
             // exponential steps
-            let step = 1;
+            let step = 0;
             page = 1;
             let reach_end = false;
             for (let i = 0; i < 32; i++) {
@@ -67,8 +67,9 @@ class Paged_Collection {
                     reach_end = true;
                     break;
                 }
-                step *= 10;
+                if (step === 0) step = 1;
                 page += step;
+                step *= 2;
             }
 
             if (!reach_end) {
