@@ -47,8 +47,8 @@
                 <h2>Suggest list</h2>
                 <div class="deck gap-1">
                     <input type="search" class="search-input" />
-                    <span class="select-all button material-symbols-rounded">all_inclusive</span>
-                    <span class="clear-all button material-symbols-rounded">delete</span>
+                    <span aria-label="Select all" role="button" tabindex="0" class="select-all button material-symbols-rounded">all_inclusive</span>
+                    <span aria-label="DeSelect all" role="button" tabindex="0" class="clear-all button material-symbols-rounded">delete</span>
                 </div>
                 <div class="select-list bag gap-1"></div>
                 <div class="suggest-list bag gap-1"></div>
@@ -68,9 +68,15 @@
                 toggle_theme_button.id = "toggle-theme";
                 const light_icon = document.createElement("span");
                 light_icon.classList.add("material-symbols-rounded", "light");
+                light_icon.setAttribute("aria-label", "Light mode");
+                light_icon.role = "button";
+                light_icon.tabIndex = 0;
                 light_icon.innerHTML = "light_mode";
                 const dark_icon = document.createElement("span");
                 dark_icon.classList.add("material-symbols-rounded", "dark");
+                dark_icon.setAttribute("aria-label", "Dark mode");
+                dark_icon.role = "button";
+                dark_icon.tabIndex = 0;
                 dark_icon.innerHTML = "nightlight";
                 toggle_theme_button.appendChild(light_icon);
                 toggle_theme_button.appendChild(dark_icon);
