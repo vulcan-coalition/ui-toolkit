@@ -180,11 +180,13 @@ class Menu_Item_Button extends Menu_Item {
 
     render(menu) {
         this.dom = document.createElement("div");
-        this.dom.classList.add("button", "menu-item");
+        this.dom.classList.add("menu-button", "menu-item");
         if (this.class_name != null) this.dom.classList.add(this.class_name);
         this.dom.role = "button";
+        this.dom.tabIndex = 0;
         const icon_dom = document.createElement("span");
         icon_dom.classList.add(ui_toolkit_symbols_class);
+        icon_dom.setAttribute("aria-hidden", "true");
         icon_dom.innerHTML = this.icon;
         const text_dom = document.createElement("span");
         text_dom.classList.add("text");

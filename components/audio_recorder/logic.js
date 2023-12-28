@@ -132,8 +132,21 @@ vulcan_recorder = (function () {
 
         const bevel_dom = document.createElement("div");
         bevel_dom.classList.add("bevel");
-        bevel_dom.innerHTML = `<div class="${ui_toolkit_symbols_class} record" role="button">mic</div><div class="${ui_toolkit_symbols_class} stop" role="button">pause</div>`;
-
+        const start_button = document.createElement("div");
+        start_button.classList.add(ui_toolkit_symbols_class, "record");
+        start_button.setAttribute("aria-label", "Start");
+        start_button.role = "button";
+        start_button.tabIndex = 0;
+        start_button.innerHTML = "mic";
+        bevel_dom.appendChild(start_button);
+        const stop_button = document.createElement("div");
+        stop_button.classList.add(ui_toolkit_symbols_class, "stop");
+        stop_button.setAttribute("aria-label", "Stop");
+        stop_button.role = "button";
+        stop_button.tabIndex = 0;
+        stop_button.innerHTML = "pause";
+        stop_button.style.display = "none";
+        bevel_dom.appendChild(stop_button);
         recorder_button.appendChild(visualizer_dom);
         recorder_button.appendChild(bevel_dom);
         dom.appendChild(recorder_button);
@@ -148,6 +161,7 @@ vulcan_recorder = (function () {
         const reset_button = document.createElement("span");
         reset_button.classList.add("button", ui_toolkit_symbols_class);
         reset_button.role = "button";
+        reset_button.tabIndex = 0;
         reset_button.setAttribute("aria-label", "Clear");
         reset_button.innerHTML = "delete";
         record_bar.appendChild(reset_button);
@@ -155,6 +169,7 @@ vulcan_recorder = (function () {
         const playback_button = document.createElement("span");
         playback_button.classList.add("button", ui_toolkit_symbols_class);
         playback_button.role = "button";
+        playback_button.tabIndex = 0;
         playback_button.setAttribute("aria-label", "Play");
         playback_button.innerHTML = "play_arrow";
         record_bar.appendChild(playback_button);
@@ -177,8 +192,14 @@ vulcan_recorder = (function () {
         recorder_button.addEventListener("click", function () {
             if (r.is_recording) {
                 r.stop();
+                stop_button.style.display = "none";
+                start_button.style.display = "inline";
+                start_button.focus();
             } else {
                 r.start();
+                start_button.style.display = "none";
+                stop_button.style.display = "inline";
+                stop_button.focus();
             }
             recorder_button.classList.toggle("toggled");
         });

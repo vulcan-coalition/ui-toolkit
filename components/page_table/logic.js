@@ -8,6 +8,9 @@ class Paged_Collection {
 
         const first_button = document.createElement("span");
         first_button.classList.add("button", ui_toolkit_symbols_class);
+        first_button.setAttribute("aria-label", "First page");
+        first_button.role = "button";
+        first_button.tabIndex = 0;
         first_button.innerHTML = "first_page";
         first_button.onclick = () => this.set_page(1);
         this.page_dom.appendChild(first_button);
@@ -15,6 +18,9 @@ class Paged_Collection {
         // page_dom add buttons and page display
         const prev_button = document.createElement("span");
         prev_button.classList.add("button", ui_toolkit_symbols_class);
+        prev_button.setAttribute("aria-label", "Previous page");
+        prev_button.role = "button";
+        prev_button.tabIndex = 0;
         prev_button.innerHTML = "navigate_before";
         prev_button.onclick = () => this.prev_page();
         this.page_dom.appendChild(prev_button);
@@ -26,12 +32,18 @@ class Paged_Collection {
 
         const next_button = document.createElement("span");
         next_button.classList.add("button", ui_toolkit_symbols_class);
+        next_button.setAttribute("aria-label", "Next page");
+        next_button.role = "button";
+        next_button.tabIndex = 0;
         next_button.innerHTML = "navigate_next";
         next_button.onclick = () => this.next_page();
         this.page_dom.appendChild(next_button);
 
         const last_button = document.createElement("span");
         last_button.classList.add("button", ui_toolkit_symbols_class);
+        last_button.setAttribute("aria-label", "Last page");
+        last_button.role = "button";
+        last_button.tabIndex = 0;
         last_button.innerHTML = "last_page";
         last_button.onclick = () => this.set_page(-1);
         this.page_dom.appendChild(last_button);
@@ -58,7 +70,7 @@ class Paged_Collection {
         if (page === -1) {
             // search for the last page
             // exponential steps
-            let step = 1;
+            let step = 0;
             page = 1;
             let reach_end = false;
             for (let i = 0; i < 32; i++) {
@@ -67,8 +79,9 @@ class Paged_Collection {
                     reach_end = true;
                     break;
                 }
-                step *= 10;
+                if (step === 0) step = 1;
                 page += step;
+                step *= 2;
             }
 
             if (!reach_end) {
@@ -126,6 +139,9 @@ class Paged_Table extends Paged_Collection {
         if (filename != null) {
             const download_button = document.createElement("span");
             download_button.classList.add("button", ui_toolkit_symbols_class);
+            download_button.setAttribute("aria-label", "Download");
+            download_button.role = "button";
+            download_button.tabIndex = 0;
             download_button.innerHTML = "download";
             download_button.onclick = () => this.export_xlsx(filename);
             this.page_dom.appendChild(download_button);
