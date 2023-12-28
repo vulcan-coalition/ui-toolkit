@@ -13,6 +13,8 @@ class Menu_Item {
 
     render(menu) {
         this.dom = document.createElement("div");
+        this.dom.classList.add("menu-item");
+        if (this.class_name != null) this.dom.classList.add(this.class_name);
         const icon_dom = document.createElement("span");
         icon_dom.classList.add(ui_toolkit_symbols_class);
         icon_dom.setAttribute("aria-hidden", "true");
@@ -22,7 +24,6 @@ class Menu_Item {
         text_dom.innerHTML = this.text;
         this.dom.appendChild(icon_dom);
         this.dom.appendChild(text_dom);
-        if (this.class_name != null) this.dom.classList.add(this.class_name);
         menu.appendChild(this.dom);
     }
 }
@@ -37,6 +38,8 @@ class Menu_Item_Link extends Menu_Item {
 
     render(menu) {
         this.dom = document.createElement("a");
+        this.dom.classList.add("link", "menu-item");
+        if (this.class_name != null) this.dom.classList.add(this.class_name);
         this.dom.href = this.href;
         if (this.link_type == "new_tab") {
             this.dom.target = "_blank";
@@ -50,7 +53,6 @@ class Menu_Item_Link extends Menu_Item {
         text_dom.innerHTML = this.text;
         this.dom.appendChild(icon_dom);
         this.dom.appendChild(text_dom);
-        if (this.class_name != null) this.dom.classList.add(this.class_name);
         menu.appendChild(this.dom);
     }
 }
@@ -79,7 +81,8 @@ class Menu_Item_Sub extends Menu_Item {
 
     render(menu, events) {
         this.dom = document.createElement("div");
-        this.dom.classList.add("sub");
+        this.dom.classList.add("sub", "menu-item");
+        if (this.class_name != null) this.dom.classList.add(this.class_name);
 
         const group = document.createElement("div");
         group.classList.add("group");
@@ -95,7 +98,7 @@ class Menu_Item_Sub extends Menu_Item {
         text_dom.innerHTML = this.text;
         const arrow = document.createElement("span");
         arrow.setAttribute("aria-hidden", "true");
-        arrow.classList.add(ui_toolkit_symbols_class);
+        arrow.classList.add(ui_toolkit_symbols_class, "arrow");
         arrow.innerHTML = "segment";
         this.arrow = arrow;
 
@@ -132,7 +135,6 @@ class Menu_Item_Sub extends Menu_Item {
             }.bind(this)
         );
 
-        if (this.class_name != null) this.dom.classList.add(this.class_name);
         menu.appendChild(this.dom);
 
         this.sub_menu_obj.render(menu, events, this.append_parent, false);
@@ -149,6 +151,7 @@ class Menu_Item_Header extends Menu_Item {
     render(menu) {
         this.dom = document.createElement("span");
         this.dom.innerHTML = this.text;
+        this.dom.classList.add("header", "menu-item");
         if (this.class_name != null) this.dom.classList.add(this.class_name);
         menu.appendChild(this.dom);
     }
@@ -162,7 +165,7 @@ class Menu_Item_Hr extends Menu_Item {
 
     render(menu) {
         this.dom = document.createElement("div");
-        this.dom.classList.add("hr");
+        this.dom.classList.add("hr", "menu-item");
         if (this.class_name != null) this.dom.classList.add(this.class_name);
         menu.appendChild(this.dom);
     }
@@ -177,6 +180,8 @@ class Menu_Item_Button extends Menu_Item {
 
     render(menu) {
         this.dom = document.createElement("div");
+        this.dom.classList.add("button", "menu-item");
+        if (this.class_name != null) this.dom.classList.add(this.class_name);
         this.dom.role = "button";
         const icon_dom = document.createElement("span");
         icon_dom.classList.add(ui_toolkit_symbols_class);
@@ -187,7 +192,6 @@ class Menu_Item_Button extends Menu_Item {
         this.dom.appendChild(icon_dom);
         this.dom.appendChild(text_dom);
         this.dom.addEventListener("click", this.onclick);
-        if (this.class_name != null) this.dom.classList.add(this.class_name);
         menu.appendChild(this.dom);
     }
 }
@@ -200,6 +204,7 @@ class Menu_Item_DOM extends Menu_Item {
     }
 
     render(menu) {
+        this.dom.classList.add("menu-item");
         if (this.class_name != null) this.dom.classList.add(this.class_name);
         menu.appendChild(this.dom);
     }
