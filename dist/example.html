@@ -18,6 +18,10 @@
                 <h2>Menu</h2>
                 <div id="menu"></div>
             </div>
+            <div class="card stack full elevated">
+                <h2>Menu Vertical</h2>
+                <div id="menu-vert"></div>
+            </div>
             <div class="card stack full elevated example-table">
                 <h2>Paged Table</h2>
                 <table>
@@ -63,7 +67,7 @@
         </div>
         <script src="./vc_uitoolkits.min.js"></script>
         <script>
-            const build_menu = function () {
+            const build_menu = function (menu_container, vertical = false) {
                 const toggle_theme_button = document.createElement("div");
                 toggle_theme_button.id = "toggle-theme";
                 const light_icon = document.createElement("span");
@@ -100,18 +104,18 @@
                 });
 
                 const menu_items = [
-                    new Menu_Item_Header("Menu"),
+                    new Menu_Item("menu", "Menu"),
                     new Menu_Item_Link("home", "Home", "./example.html", "self", true),
                     new Menu_Item_Button("logout", "Logout", function (e) {
                         alert("Logout");
                     }),
                     new Menu_Item_Hr(),
-                    new Menu_Item_Sub("account_circle", "Account", [new Menu_Item_Link("home", "Home", "/example.html", "self", true), new Menu_Item_Link("home", "Home", "/example.html", "self", true)], true),
+                    new Menu_Item_Sub("account_circle", "Account", [new Menu_Item_Link("home", "Home", "/example.html", "self", true), new Menu_Item_Link("home", "Home", "/example.html", "self", true)], !vertical),
+                    new Menu_Item_Hr(),
+                    new Menu_Item_Sub("account_circle", "Account", [new Menu_Item_Link("home", "Home", "/example.html", "self", true), new Menu_Item_Link("home", "Home", "/example.html", "self", true)], !vertical),
                     new Menu_Item_Hr(),
                     new Menu_Item_DOM(toggle_theme_button),
                 ];
-
-                const menu_container = document.querySelector("#menu");
 
                 const menu_obj = new Menu(menu_items);
                 menu_obj.render(menu_container, {
@@ -127,7 +131,8 @@
             window.addEventListener("load", async function () {
                 ui_toolkit_symbols_class = "material-symbols-rounded";
 
-                build_menu();
+                build_menu(document.querySelector("#menu"));
+                build_menu(document.querySelector("#menu-vert"), true);
 
                 const max_items = 128;
 
