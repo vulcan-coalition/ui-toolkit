@@ -274,7 +274,7 @@ class Paged_List extends Paged_Collection {
     }
 
     async update() {
-        const data = await this.request_data(this.page, this.limit, this.sort_by);
+        const data = await this.request_data(this.page, this.limit);
         this.list_dom.innerHTML = "";
         for (const item_dom of data) {
             this.list_dom.appendChild(item_dom);
