@@ -121,9 +121,20 @@ vulcan_recorder = (function () {
         get_data() {
             return this.data_blob;
         }
+
+        async set_data(url) {
+            // given audio url, set the data
+            try {
+                const r = await fetch(url);
+                const data = await r.blob();
+                this.data_blob = data;
+            } catch (error) {
+                console.log(error);
+            }
+        }
     }
 
-    const build_control = function (dom, max_record_time = 60) {
+    const build_control = function (dom, max_record_time = 60, on_record_click = null) {
         const recorder_button = document.createElement("div");
         recorder_button.classList.add("record-button");
 
@@ -190,6 +201,9 @@ vulcan_recorder = (function () {
         );
 
         recorder_button.addEventListener("click", function () {
+            if (on_record_click != null) {
+                on_record_click(r);
+            }
             if (r.is_recording) {
                 r.stop();
                 stop_button.style.display = "none";
