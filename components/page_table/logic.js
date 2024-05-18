@@ -1,63 +1,70 @@
 class Paged_Collection {
-    constructor(page_dom, request_data, limit = 10) {
-        this.page_dom = page_dom;
+    constructor(page_dom, request_data, limit = 10, page_pointer_node = null) {
         this.page = 1;
         this.limit = limit;
 
         this.request_data = request_data;
 
-        const first_button = document.createElement("span");
-        first_button.classList.add("button", ui_toolkit_symbols_class);
-        first_button.setAttribute("aria-label", "First page");
-        first_button.role = "button";
-        first_button.tabIndex = 0;
-        first_button.innerHTML = "first_page";
-        first_button.onclick = () => this.set_page(1);
-        this.page_dom.appendChild(first_button);
+        if (page_dom != null) {
+            this.page_dom = page_dom;
 
-        // page_dom add buttons and page display
-        const prev_button = document.createElement("span");
-        prev_button.classList.add("button", ui_toolkit_symbols_class);
-        prev_button.setAttribute("aria-label", "Previous page");
-        prev_button.role = "button";
-        prev_button.tabIndex = 0;
-        prev_button.innerHTML = "navigate_before";
-        prev_button.onclick = () => this.prev_page();
-        this.page_dom.appendChild(prev_button);
+            const first_button = document.createElement("span");
+            first_button.classList.add("button", ui_toolkit_symbols_class);
+            first_button.setAttribute("aria-label", "First page");
+            first_button.role = "button";
+            first_button.tabIndex = 0;
+            first_button.innerHTML = "first_page";
+            first_button.onclick = () => this.set_page(1);
+            this.page_dom.appendChild(first_button);
 
-        this.page_dom.appendChild(document.createTextNode("Page: "));
-        this.page_pointer_node = document.createElement("span");
-        this.page_pointer_node.innerHTML = this.page;
-        this.page_dom.appendChild(this.page_pointer_node);
+            // page_dom add buttons and page display
+            const prev_button = document.createElement("span");
+            prev_button.classList.add("button", ui_toolkit_symbols_class);
+            prev_button.setAttribute("aria-label", "Previous page");
+            prev_button.role = "button";
+            prev_button.tabIndex = 0;
+            prev_button.innerHTML = "navigate_before";
+            prev_button.onclick = () => this.prev_page();
+            this.page_dom.appendChild(prev_button);
 
-        const next_button = document.createElement("span");
-        next_button.classList.add("button", ui_toolkit_symbols_class);
-        next_button.setAttribute("aria-label", "Next page");
-        next_button.role = "button";
-        next_button.tabIndex = 0;
-        next_button.innerHTML = "navigate_next";
-        next_button.onclick = () => this.next_page();
-        this.page_dom.appendChild(next_button);
+            this.page_dom.appendChild(document.createTextNode("Page: "));
+            this.page_pointer_node = document.createElement("span");
+            this.page_pointer_node.innerHTML = this.page;
+            this.page_dom.appendChild(this.page_pointer_node);
 
-        const last_button = document.createElement("span");
-        last_button.classList.add("button", ui_toolkit_symbols_class);
-        last_button.setAttribute("aria-label", "Last page");
-        last_button.role = "button";
-        last_button.tabIndex = 0;
-        last_button.innerHTML = "last_page";
-        last_button.onclick = () => this.set_page(-1);
-        this.page_dom.appendChild(last_button);
+            const next_button = document.createElement("span");
+            next_button.classList.add("button", ui_toolkit_symbols_class);
+            next_button.setAttribute("aria-label", "Next page");
+            next_button.role = "button";
+            next_button.tabIndex = 0;
+            next_button.innerHTML = "navigate_next";
+            next_button.onclick = () => this.next_page();
+            this.page_dom.appendChild(next_button);
 
-        const limit_select = document.createElement("select");
-        for (const limit of [10, 20, 50, 100]) {
-            const option = document.createElement("option");
-            option.value = limit;
-            option.innerHTML = limit;
-            limit_select.appendChild(option);
+            const last_button = document.createElement("span");
+            last_button.classList.add("button", ui_toolkit_symbols_class);
+            last_button.setAttribute("aria-label", "Last page");
+            last_button.role = "button";
+            last_button.tabIndex = 0;
+            last_button.innerHTML = "last_page";
+            last_button.onclick = () => this.set_page(-1);
+            this.page_dom.appendChild(last_button);
+
+            const limit_select = document.createElement("select");
+            for (const limit of [10, 20, 50, 100]) {
+                const option = document.createElement("option");
+                option.value = limit;
+                option.innerHTML = limit;
+                limit_select.appendChild(option);
+            }
+            limit_select.value = limit;
+            limit_select.onchange = () => this.set_limit(limit_select.value);
+            this.page_dom.appendChild(limit_select);
+        } else if (page_pointer_node != null) {
+            this.page_pointer_node = page_pointer_node;
+        } else {
+            throw "page_dom or page_pointer_node must be provided";
         }
-        limit_select.value = limit;
-        limit_select.onchange = () => this.set_limit(limit_select.value);
-        this.page_dom.appendChild(limit_select);
     }
 
     set_limit(limit) {
@@ -112,7 +119,7 @@ class Paged_Collection {
             }
         }
 
-        this.page_pointer_node.innerHTML = this.page;
+        if (this.page_pointer_node != null) this.page_pointer_node.innerHTML = this.page;
         return this;
     }
 
@@ -279,6 +286,19 @@ class Paged_List extends Paged_Collection {
         for (const item_dom of data) {
             this.list_dom.appendChild(item_dom);
         }
+        return data.length;
+    }
+}
+
+class Custom_Paged_List extends Paged_Collection {
+    constructor(request_data, limit = 10) {
+        super(null, request_data, limit);
+        this.list_dom = list_dom;
+        this.update();
+    }
+
+    async update() {
+        const data = await this.request_data(this.page, this.limit);
         return data.length;
     }
 }
