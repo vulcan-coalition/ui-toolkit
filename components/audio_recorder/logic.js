@@ -134,7 +134,7 @@ vulcan_recorder = (function () {
         }
     }
 
-    const build_control = function (dom, max_record_time = 60) {
+    const build_control = function (dom, max_record_time = 60, on_record_click = null) {
         const recorder_button = document.createElement("div");
         recorder_button.classList.add("record-button");
 
@@ -201,6 +201,9 @@ vulcan_recorder = (function () {
         );
 
         recorder_button.addEventListener("click", function () {
+            if (on_record_click != null) {
+                on_record_click(r);
+            }
             if (r.is_recording) {
                 r.stop();
                 stop_button.style.display = "none";
