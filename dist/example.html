@@ -61,6 +61,10 @@
                 <h2>Audio recorder</h2>
                 <div class="recorder"></div>
             </div>
+            <div class="card stack full elevated example-dialogue">
+                <h2>Dialogues</h2>
+                <div class="deck gap-1"><input type="button" id="alert-dialog" value="Alert"" /> <input type="button" id="confirm-dialog" value="Confirm"" /> <input type="button" id="load-dialog" value="Show 2 seconds loader"" /></div>
+            </div>
         </div>
         <div class="footer primary">
             <span> &copy; 2023 Vulcan Coalition Co., Ltd. All Rights Reserved. </span>
@@ -213,6 +217,26 @@
 
                 for (const container_dom of document.querySelectorAll(".example-audio-recorder")) {
                     const recorder = vulcan_recorder.build_control(container_dom.querySelector(".recorder"));
+                }
+
+                for (const container_dom of document.querySelectorAll(".example-dialogue")) {
+                    container_dom.querySelector("#alert-dialog").addEventListener("click", async function () {
+                        vulcan_dialogue.display_load(true);
+                        await vulcan_dialogue.alert("This is an alert message.");
+                        vulcan_dialogue.display_load(false);
+                    });
+
+                    container_dom.querySelector("#confirm-dialog").addEventListener("click", async function () {
+                        const result = await vulcan_dialogue.confirm("This is a confirm message.");
+                        await vulcan_dialogue.alert(`You selected ${result ? "Yes" : "No"}.`);
+                    });
+
+                    container_dom.querySelector("#load-dialog").addEventListener("click", async function () {
+                        vulcan_dialogue.display_load(true);
+                        setTimeout(() => {
+                            vulcan_dialogue.display_load(false);
+                        }, 2000);
+                    });
                 }
             });
         </script>

@@ -744,3 +744,146 @@ table tfoot td {
     align-items: center;
     gap: 0.5rem;
 }
+
+/* -- Loader -- */
+
+.float-loader {
+    z-index: 5;
+    position: absolute;
+    top: 0%;
+    left: 0%;
+    width: 0%;
+    height: 0%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    overflow: visible;
+    background-color: #0000;
+    border: none;
+}
+
+.float-loader::backdrop {
+    background-color: #1117;
+}
+
+.float-loader.hide {
+    display: none;
+}
+
+.float-loader .hide {
+    display: none;
+}
+
+.float-loader.fade-out::backdrop {
+    background-color: #1110;
+    transition: background-color 0.5s;
+}
+
+.float-loader.fade-out {
+    opacity: 0;
+    transition: opacity 0.5s;
+}
+
+.loader {
+    width: 48px;
+    height: 48px;
+    position: relative;
+}
+.loader::before,
+.loader::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 48em;
+    height: 48em;
+    background-image: radial-gradient(circle 10px, #fff 100%, transparent 0), radial-gradient(circle 10px, #fff 100%, transparent 0), radial-gradient(circle 10px, #fff 100%, transparent 0), radial-gradient(circle 10px, #fff 100%, transparent 0), radial-gradient(circle 10px, #fff 100%, transparent 0), radial-gradient(circle 10px, #fff 100%, transparent 0), radial-gradient(circle 10px, #fff 100%, transparent 0), radial-gradient(circle 10px, #fff 100%, transparent 0);
+    background-position: 0em -18em, 0em 18em, 18em 0em, -18em 0em, 13em -13em, -13em -13em, 13em 13em, -13em 13em;
+    background-repeat: no-repeat;
+    font-size: 0.5px;
+    border-radius: 50%;
+    animation: blast 1s ease-in infinite;
+}
+.loader::after {
+    font-size: 1px;
+    background: #fff;
+    animation: bounce 1s ease-in infinite;
+}
+
+@keyframes bounce {
+    0%,
+    100% {
+        font-size: 0.75px;
+    }
+    50% {
+        font-size: 1.5px;
+    }
+}
+@keyframes blast {
+    0%,
+    40% {
+        font-size: 0.5px;
+    }
+    70% {
+        opacity: 1;
+        font-size: 4px;
+    }
+    100% {
+        font-size: 6px;
+        opacity: 0;
+    }
+}
+
+/* -- END: Loader -- */
+
+/* -- Messages --  */
+
+.float-message {
+    position: absolute;
+    top: 0%;
+    left: 0%;
+    z-index: 6;
+    width: fit-content !important;
+
+    padding: 1rem 2rem;
+    border-radius: 1rem;
+    border: solid 1px var(--accent);
+    box-shadow: 2px 2px 5px #111f;
+}
+
+.float-message::backdrop {
+    background-color: #1117;
+}
+
+.float-message.hide {
+    display: none;
+}
+
+.float-message .hide {
+    display: none;
+}
+
+.float-message.fade-out::backdrop {
+    background-color: #1110;
+    transition: background-color 0.5s;
+}
+
+.float-message.fade-out {
+    opacity: 0;
+    transition: opacity 0.5s;
+}
+
+.float-message .float-box {
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+
+    color: var(--neutral) !important;
+    background: var(--neutral-background) !important;
+}
+
+/* -- END: Messages -- */
