@@ -761,6 +761,7 @@ table tfoot td {
     overflow: visible;
     background-color: #0000;
     border: none;
+    outline: none;
 }
 
 .float-loader::backdrop {
