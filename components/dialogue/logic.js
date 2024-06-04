@@ -7,7 +7,7 @@ vulcan_dialogue = (function () {
             loader_dom.classList.add("float-loader", "hide");
             loader_dom.innerHTML = `
                 <span class="hide">loading</span>
-                <span class="loader"></span>
+                <div class="loader"><span><span></div>
             `;
             document.body.appendChild(loader_dom);
         }
