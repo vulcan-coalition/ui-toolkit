@@ -134,7 +134,7 @@ vulcan_recorder = (function () {
         }
     }
 
-    const build_control = function (dom, max_record_time = 60, on_record_click = null) {
+    const build_control = function (dom, max_record_time = 60, on_record_click = null, mic_icon = "mic", pause_icon = "pause", play_icon = "play_arrow", delete_icon = "delete") {
         const recorder_button = document.createElement("div");
         recorder_button.classList.add("record-button");
 
@@ -148,14 +148,14 @@ vulcan_recorder = (function () {
         start_button.setAttribute("aria-label", "Start");
         start_button.role = "button";
         start_button.tabIndex = 0;
-        start_button.innerHTML = "mic";
+        start_button.innerHTML = mic_icon;
         bevel_dom.appendChild(start_button);
         const stop_button = document.createElement("div");
         stop_button.classList.add(ui_toolkit_symbols_class, "stop");
         stop_button.setAttribute("aria-label", "Stop");
         stop_button.role = "button";
         stop_button.tabIndex = 0;
-        stop_button.innerHTML = "pause";
+        stop_button.innerHTML = pause_icon;
         stop_button.style.display = "none";
         bevel_dom.appendChild(stop_button);
         recorder_button.appendChild(visualizer_dom);
@@ -174,7 +174,7 @@ vulcan_recorder = (function () {
         reset_button.role = "button";
         reset_button.tabIndex = 0;
         reset_button.setAttribute("aria-label", "Clear");
-        reset_button.innerHTML = "delete";
+        reset_button.innerHTML = delete_icon;
         record_bar.appendChild(reset_button);
 
         const playback_button = document.createElement("span");
@@ -182,7 +182,7 @@ vulcan_recorder = (function () {
         playback_button.role = "button";
         playback_button.tabIndex = 0;
         playback_button.setAttribute("aria-label", "Play");
-        playback_button.innerHTML = "play_arrow";
+        playback_button.innerHTML = play_icon;
         record_bar.appendChild(playback_button);
 
         dom.appendChild(record_bar);
