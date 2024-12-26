@@ -2,7 +2,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Kanit:wght@300;500;600&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@100;200;300;400;500;600;700;800;900&display=swap");
 
-.material-symbols-outlined {
+.material-symbols-rounded {
     font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 48;
 }
 
@@ -14,41 +14,57 @@ body {
 }
 
 body.light {
-    --accent: #fff;
-    --accent-background: #44005f;
+    --accent: #ffff;
+    --accent-background: #5f2aa1;
 
-    --neutral: #21004d;
+    --primary-color: #ffff;
+    --primary-background: #5f2aa1;
+
+    --secondary-color: #204f;
+    --secondary-background: #f3f3f3;
+
+    --tertiary-color: #efe9ff;
+    --tertiary-background: #7371fc;
+
+    --neutral: #000;
     --neutral-background: #fff;
 }
 
 body {
-    --accent: #fff;
-    --accent-background: #11001a;
+    --accent: #ddd;
+    --accent-background: #212d40;
 
-    --neutral: #fff;
-    --neutral-background: #21004d;
+    --primary-color: #ddd;
+    --primary-background: #151b25;
+
+    --secondary-color: #ddd;
+    --secondary-background: #2c374b;
+
+    --tertiary-color: #ddd;
+    --tertiary-background: #343f54;
+
+    --neutral: #ddd;
+    --neutral-background: #364156;
 }
 
 .primary {
-    color: var(--accent);
-    background-color: var(--accent-background);
-    background: linear-gradient(162deg, rgba(68, 0, 95, 1) 0%, rgba(26, 0, 37, 1) 100%);
+    color: var(--primary-color);
+    background-color: var(--primary-background);
 }
 
 .secondary {
-    color: var(--neutral);
-    background-color: var(--neutral-background);
+    color: var(--secondary-color);
+    background-color: var(--secondary-background);
 }
 
 .tertiary {
-    color: #333;
-    border: solid 1px #44005f;
-    background-color: #fff0;
+    color: var(--tertiary-color);
+    background-color: var(--tertiary-background);
 }
 
 .neutral {
-    color: #fff;
-    background-color: #555;
+    color: var(--neutral);
+    background-color: var(--neutral-background);
 }
 
 .relief {

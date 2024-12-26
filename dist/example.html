@@ -57,6 +57,14 @@
                 <div class="select-list bag gap-1"></div>
                 <div class="suggest-list bag gap-1"></div>
             </div>
+            <div class="card stack gap-1 full elevated example-text-list">
+                <h2>Text list</h2>
+                <div class="deck gap-1">
+                    <input type="text" class="text-input" />
+                    <span aria-label="DeSelect all" role="button" tabindex="0" class="clear-all button material-symbols-rounded">delete</span>
+                </div>
+                <div class="select-list bag gap-1"></div>
+            </div>
             <div class="card stack gap-1 full elevated example-audio-recorder">
                 <h2>Audio recorder</h2>
                 <div class="recorder"></div>
@@ -64,6 +72,14 @@
             <div class="card stack full elevated example-dialogue">
                 <h2>Dialogues</h2>
                 <div class="deck gap-1"><input type="button" id="alert-dialog" value="Alert"" /> <input type="button" id="confirm-dialog" value="Confirm"" /> <input type="button" id="load-dialog" value="Show 2 seconds loader"" /></div>
+            </div>
+            <div class="card stack gap-1 full elevated example-toggle-button">
+                <h2>Toggle buttons</h2>
+                <div class="deck gap-1">
+                    <div class="button toggle"></div>
+                    <div class="button toggle"></div>
+                    <div class="button toggle"></div>
+                </div>
             </div>
         </div>
         <div class="footer primary">
@@ -190,6 +206,7 @@
 
                 const build_tag = function (icon, name) {
                     const elem = document.createElement("div");
+                    elem.classList.add("elevated");
                     const icon_button = document.createElement("span");
                     icon_button.classList.add("material-symbols-rounded");
                     icon_button.innerText = icon;
@@ -210,6 +227,14 @@
 
                     container_dom.querySelector(".clear-all").addEventListener("click", function () {
                         suggest_list.clear_selected();
+                    });
+                }
+
+                for (const container_dom of document.querySelectorAll(".example-text-list")) {
+                    const text_list = new Text_list(container_dom.querySelector(".text-input"), container_dom.querySelector(".select-list"), build_tag.bind(null, "close"));
+
+                    container_dom.querySelector(".clear-all").addEventListener("click", function () {
+                        text_list.clear_selected();
                     });
                 }
 
@@ -237,6 +262,14 @@
                             vulcan_dialogue.display_load(false);
                         }, 2000);
                     });
+                }
+
+                for (const container_dom of document.querySelectorAll(".example-toggle-button")) {
+                    for (const button of container_dom.querySelectorAll(".button.toggle")) {
+                        const toggle_button = new Toggle_Button(button, ["home", "search", "menu", "close"], function (index) {
+                            console.log(index);
+                        });
+                    }
                 }
             });
         </script>

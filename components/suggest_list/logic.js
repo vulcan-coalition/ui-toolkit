@@ -1,13 +1,77 @@
-class Suggest_list {
-    constructor(search_input_dom, tag_list_dom, tag_suggest_dom, build_suggest_dom, build_tag_dom) {
-        this.search_input = search_input_dom;
+class Proto_list {
+    constructor(tag_list_dom, build_tag_dom) {
         this.tag_list_dom = tag_list_dom;
+        this.build_tag_dom = build_tag_dom;
+
+        this.selected_data = [];
+    }
+
+    get_selected() {
+        return this.selected_data;
+    }
+
+    set_selected(tag) {
+        const idx = this.selected_data.indexOf(tag);
+        if (idx > -1) {
+            return;
+        }
+        this.selected_data.push(tag);
+
+        const tag_node = this.build_tag_dom(tag);
+        let close_button = tag_node.querySelector(".close");
+        if (close_button == null) {
+            close_button = tag_node;
+        }
+        close_button.addEventListener(
+            "click",
+            function () {
+                const idx = this.selected_data.indexOf(tag);
+                if (idx > -1) {
+                    this.selected_data.splice(idx, 1);
+                }
+                tag_node.remove();
+            }.bind(this)
+        );
+        this.tag_list_dom.appendChild(tag_node);
+    }
+
+    clear_selected() {
+        this.selected_data.splice(0, this.selected_data.length);
+        this.tag_list_dom.innerHTML = "";
+    }
+}
+
+class Text_list extends Proto_list {
+    constructor(input_dom, tag_list_dom, build_tag_dom) {
+        super(tag_list_dom, build_tag_dom);
+
+        this.input = input_dom;
+
+        this.input.addEventListener(
+            "keydown",
+            function (e) {
+                if (e.code === "Enter") {
+                    const tag = this.input.value.trim();
+                    if (tag.length > 0) {
+                        this.set_selected(tag);
+                        this.input.value = "";
+                    }
+                }
+            }.bind(this)
+        );
+    }
+}
+
+class Suggest_list extends Proto_list {
+    constructor(search_input_dom, tag_list_dom, tag_suggest_dom, build_suggest_dom, build_tag_dom) {
+        super(tag_list_dom, build_tag_dom);
+
+        this.search_input = search_input_dom;
+
         this.tag_suggest_dom = tag_suggest_dom;
+        this.build_suggest_dom = build_suggest_dom;
 
         this.data = [];
-        this.selected_data = [];
-
-        this.build_tag_dom = build_tag_dom;
 
         this.search_input.addEventListener(
             "input",
@@ -20,7 +84,7 @@ class Suggest_list {
                 this.tag_suggest_dom.style.display = "flex";
                 filtered_data.forEach(
                     function (item) {
-                        const tag_node = build_suggest_dom(item.tag);
+                        const tag_node = this.build_suggest_dom(item.tag);
                         tag_node.addEventListener(
                             "click",
                             function () {
@@ -84,35 +148,6 @@ class Suggest_list {
         }
     }
 
-    get_selected() {
-        return this.selected_data;
-    }
-
-    set_selected(tag) {
-        const idx = this.selected_data.indexOf(tag);
-        if (idx > -1) {
-            return;
-        }
-        this.selected_data.push(tag);
-
-        const tag_node = this.build_tag_dom(tag);
-        let close_button = tag_node.querySelector(".close");
-        if (close_button == null) {
-            close_button = tag_node;
-        }
-        close_button.addEventListener(
-            "click",
-            function () {
-                const idx = this.selected_data.indexOf(tag);
-                if (idx > -1) {
-                    this.selected_data.splice(idx, 1);
-                }
-                tag_node.remove();
-            }.bind(this)
-        );
-        this.tag_list_dom.appendChild(tag_node);
-    }
-
     select_all() {
         this.clear_selected();
         this.data.forEach(
@@ -120,10 +155,5 @@ class Suggest_list {
                 this.set_selected(item.tag);
             }.bind(this)
         );
-    }
-
-    clear_selected() {
-        this.selected_data.splice(0, this.selected_data.length);
-        this.tag_list_dom.innerHTML = "";
     }
 }
