@@ -21,4 +21,10 @@ class Toggle_Button {
         this.dom.innerHTML = this.symbol_list[this.selecting];
         this.on_toggled(this.selecting);
     }
+
+    select(index) {
+        this.selecting = index;
+        this.dom.innerHTML = this.symbol_list[this.selecting];
+        this.on_toggled(this.selecting);
+    }
 }
