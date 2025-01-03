@@ -7,7 +7,8 @@ class Proto_list {
     }
 
     get_selected() {
-        return this.selected_data;
+        // return copy of selected data
+        return this.selected_data.slice();
     }
 
     set_selected(tag) {
