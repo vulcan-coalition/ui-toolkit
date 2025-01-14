@@ -22,9 +22,19 @@ class Toggle_Button {
         this.on_toggled(this.selecting);
     }
 
+    toggle_not_trigger() {
+        this.selecting = (this.selecting + 1) % this.symbol_list.length;
+        this.dom.innerHTML = this.symbol_list[this.selecting];
+    }
+
     select(index) {
         this.selecting = index;
         this.dom.innerHTML = this.symbol_list[this.selecting];
         this.on_toggled(this.selecting);
+    }
+
+    select_not_trigger(index) {
+        this.selecting = index;
+        this.dom.innerHTML = this.symbol_list[this.selecting];
     }
 }
