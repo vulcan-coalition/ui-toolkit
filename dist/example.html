@@ -71,7 +71,7 @@
             </div>
             <div class="card stack full elevated example-dialogue">
                 <h2>Dialogues</h2>
-                <div class="deck gap-1"><input type="button" id="alert-dialog" value="Alert"" /> <input type="button" id="confirm-dialog" value="Confirm"" /> <input type="button" id="load-dialog" value="Show 2 seconds loader"" /></div>
+                <div class="deck gap-1"><input type="button" id="alert-dialog" value="Alert"" /> <input type="button" id="confirm-dialog" value="Confirm"" /> <input type="button" id="prompt-dialog" value="Prompt"" /> <input type="button" id="load-dialog" value="Show 2 seconds loader"" /></div>
             </div>
             <div class="card stack gap-1 full elevated example-toggle-button">
                 <h2>Toggle buttons</h2>
@@ -254,6 +254,11 @@
                     container_dom.querySelector("#confirm-dialog").addEventListener("click", async function () {
                         const result = await vulcan_dialogue.confirm("This is a confirm message.");
                         await vulcan_dialogue.alert(`You selected ${result ? "Yes" : "No"}.`);
+                    });
+
+                    container_dom.querySelector("#prompt-dialog").addEventListener("click", async function () {
+                        const result = await vulcan_dialogue.prompt("This is a prompt message.");
+                        await vulcan_dialogue.alert(`You entered ${result}.`);
                     });
 
                     container_dom.querySelector("#load-dialog").addEventListener("click", async function () {

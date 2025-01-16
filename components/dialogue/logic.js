@@ -45,6 +45,11 @@ vulcan_dialogue = (function () {
                 <input type="button" class="confirm-ok-button" value="ok" aria-label="ok">
                 <input type="button" class="confirm-cancel-button" value="cancel" aria-label="cancel">
             </div>
+            <div class="action prompt hide">
+                <input type="text" class="prompt-input" aria-label="input">
+                <input type="button" class="prompt-ok-button" value="ok" aria-label="ok">
+                <input type="button" class="prompt-cancel-button" value="cancel" aria-label="cancel">
+            </div>
         </div>
     `;
     document.body.appendChild(message_dom);
@@ -79,6 +84,32 @@ vulcan_dialogue = (function () {
         }
     });
 
+    const prompt_ok_handler = () => {
+        for (let i = 0; i < message_content.length; i++) {
+            if (message_content[i].id === display_id) {
+                message_content[i].resolve(message_dom.querySelector(".prompt-input").value);
+                break;
+            }
+        }
+    };
+
+    message_dom.querySelector(".prompt-input").addEventListener("keydown", (event) => {
+        if (event.code === "Enter") {
+            prompt_ok_handler();
+        }
+    });
+
+    message_dom.querySelector(".prompt-ok-button").addEventListener("click", prompt_ok_handler);
+
+    message_dom.querySelector(".prompt-cancel-button").addEventListener("click", () => {
+        for (let i = 0; i < message_content.length; i++) {
+            if (message_content[i].id === display_id) {
+                message_content[i].resolve(null);
+                break;
+            }
+        }
+    });
+
     const display_message = function () {
         if (display_id !== null) {
             return;
@@ -106,7 +137,10 @@ vulcan_dialogue = (function () {
             message_dom.querySelector(".alert").classList.remove("hide");
         } else if (content.type === "confirm") {
             message_dom.querySelector(".confirm").classList.remove("hide");
+        } else if (content.type === "prompt") {
+            message_dom.querySelector(".prompt").classList.remove("hide");
         }
+
         message_dom.showModal();
         message_dom.classList.remove("hide");
         message_dom.classList.remove("fade-out");
@@ -124,6 +158,8 @@ vulcan_dialogue = (function () {
             message_dom.querySelector(".alert").classList.add("hide");
         } else if (content.type === "confirm") {
             message_dom.querySelector(".confirm").classList.add("hide");
+        } else if (content.type === "prompt") {
+            message_dom.querySelector(".prompt").classList.add("hide");
         }
 
         if (message_content.length > 0) {
@@ -174,9 +210,28 @@ vulcan_dialogue = (function () {
         return promise;
     };
 
+    const prompt = function (html_content) {
+        const id = new Date().getTime();
+
+        const promise = new Promise((resolve, reject) => {
+            message_content.push({
+                id: id,
+                type: "prompt",
+                html_content: html_content,
+                resolve: function (result) {
+                    resolve(result);
+                    hide_message(id);
+                },
+            });
+        });
+        display_message();
+        return promise;
+    };
+
     return {
         display_load: display_load,
         alert: alert,
         confirm: confirm,
+        prompt: prompt,
     };
 })();
