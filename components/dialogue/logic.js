@@ -128,7 +128,13 @@ vulcan_dialogue = (function () {
         display_id = content.id;
 
         const float_content = message_dom.querySelector(".float-content");
-        float_content.innerHTML = content.html_content;
+        if (typeof content.html_content === "string") {
+            float_content.innerHTML = content.html_content;
+        } else {
+            // treat as a DOM element
+            float_content.innerHTML = "";
+            float_content.appendChild(content.html_content);
+        }
 
         // focus on content for screen reader
         float_content.focus();

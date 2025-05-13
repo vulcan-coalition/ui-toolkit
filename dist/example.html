@@ -257,7 +257,9 @@
                     });
 
                     container_dom.querySelector("#prompt-dialog").addEventListener("click", async function () {
-                        const result = await vulcan_dialogue.prompt("This is a prompt message.");
+                        const prompt_dom = document.createElement("div");
+                        prompt_dom.innerHTML = `This is a prompt message.`;
+                        const result = await vulcan_dialogue.prompt(prompt_dom);
                         await vulcan_dialogue.alert(`You entered ${result}.`);
                     });
 
