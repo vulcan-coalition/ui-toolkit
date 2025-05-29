@@ -587,6 +587,34 @@ table tfoot td {
     color: var(--accent);
 }
 
+/* File explorer */
+
+.example-file-explorer .list {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem 1rem;
+}
+
+.file-item {
+    cursor: pointer;
+    user-select: none;
+
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: flex-start;
+    align-items: stretch;
+}
+
+.file-item > .icon {
+    padding: 0.5rem 0.5rem;
+    font-size: 4rem;
+    width: 5rem;
+    height: 5rem;
+}
+
 /* List */
 
 .example-list .list {
