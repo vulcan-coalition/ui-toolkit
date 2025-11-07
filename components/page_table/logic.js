@@ -63,7 +63,7 @@ class Paged_Collection {
         } else if (page_pointer_node != null) {
             this.page_pointer_node = page_pointer_node;
         } else {
-            throw "page_dom or page_pointer_node must be provided";
+            // throw "page_dom or page_pointer_node must be provided";
         }
     }
 
