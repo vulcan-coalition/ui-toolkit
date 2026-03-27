@@ -26,7 +26,7 @@
                 <div id="menu-vert"></div>
             </div>
             <div class="card stack full elevated example-table">
-                <h2>Paged Table</h2>
+                <h2>Linked Table</h2>
                 <table>
                     <thead>
                         <tr>
@@ -51,7 +51,7 @@
                 <div class="list framed padded-1"></div>
             </div>
             <div class="card stack full gap-1 elevated example-list">
-                <h2>Paged List</h2>
+                <h2>Linked List</h2>
                 <div class="list"></div>
                 <div class="page-control"></div>
             </div>
@@ -162,24 +162,43 @@
 
                 const max_items = 128;
 
+                
                 for (const container_dom of document.querySelectorAll(".example-table")) {
-                    const table = new Paged_Table(
+                    const table = new Linked_Table(
                         container_dom.querySelector("table"),
                         container_dom.querySelector(".page-control"),
-                        async function (p, l, s) {
-                            console.log(p, l, s);
+                        async function (l, df, f_id, l_id, s) {
+                            console.log(l, df, f_id, l_id, s);
+
+                            let start_index = 0, end_index = 0;
+                            if (s != null && s.order === "desc") {
+                                if (df) {
+                                    start_index = Math.max(l_id - l, 0);
+                                    end_index = Math.min(start_index + l, max_items);
+                                } else {
+                                    end_index = Math.min(l_id + l, max_items);
+                                    start_index = Math.max(end_index - l, 0);
+                                }
+                            } else {
+                                if (df) {
+                                    end_index = Math.min(l_id + l, max_items);
+                                    start_index = Math.max(end_index - l, 0);
+                                } else {
+                                    start_index = Math.max(f_id - l, 0);
+                                    end_index = Math.min(start_index + l, max_items);
+                                }
+                            }
+                            
                             const rows = [];
-                            const start_index = (p - 1) * l;
-                            const end_index = Math.min(p * l, max_items);
-                            for (let i = start_index; i < end_index; i++) {
+                            for (let i = start_index; i != end_index;) {
                                 const row = [];
                                 for (let j = 0; j < 4; j++) {
-                                    if (s != null && s.order === "desc") row.push(`Row ${max_items - (p - 1) * l - (i - start_index)} Cell ${j + 1}`);
-                                    else row.push(`Row ${i + 1} Cell ${j + 1}`);
+                                    row.push(`Row ${i + 1} Cell ${j + 1}`);
                                 }
                                 rows.push(row);
+                                i = (end_index > start_index) ? i + 1 : i - 1;
                             }
-                            return rows;
+                            return [rows, start_index, end_index];
                         },
                         (limit = 10),
                         (filename = "example_table.csv")
@@ -268,24 +287,33 @@
                 }
 
                 for (const container_dom of document.querySelectorAll(".example-list")) {
-                    const list = new Paged_List(
+                    const list = new Linked_List(
                         container_dom.querySelector(".list"),
                         container_dom.querySelector(".page-control"),
-                        async function (p, l, s) {
-                            console.log(p, l, s);
-                            const start_index = (p - 1) * l;
-                            const end_index = Math.min(p * l, max_items);
+                        async function (l, df, f_id, l_id) {
+                            console.log(l, df, f_id, l_id);
+                            
+                            let start_index = 0, end_index = 0;
+                            if (df) {
+                                end_index = Math.min(l_id + l, max_items);
+                                start_index = Math.max(end_index - l, 0);
+                            } else {
+                                start_index = Math.max(f_id - l, 0);
+                                end_index = Math.min(start_index + l, max_items);
+                            }
+
                             const items = [];
                             const icon_list = ["hearing", "article", "visibility", "mic"];
-                            for (let i = start_index; i < end_index; i++) {
+                            for (let i = start_index; i != end_index;) {
                                 const item_div = document.createElement("div");
                                 item_div.classList.add("item");
                                 // random choose icon
                                 const icon = icon_list[Math.floor(Math.random() * icon_list.length)];
                                 item_div.innerHTML = `<span class="icon ${ui_toolkit_symbols_class}">${icon}</span><div class="info"><h3>${i + 1}</h3><div class="detail">lorem ipsum</div></div>`;
                                 items.push(item_div);
+                                i = (end_index > start_index) ? i + 1 : i - 1;
                             }
-                            return items;
+                            return [items, start_index, end_index];
                         },
                         (limit = 10)
                     );
